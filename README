@@ -1,0 +1,113 @@
+= An Experiment
+
+First let me say up front that this library is an experiment. I don't
+even know if it is a good idea yet but if you are feeling adventurous
+I encourage you to take the red pill and see how deep this rabbit hole
+goes.
+
+= Putting Tests In-line
+
+So the basic goal of this library is to allow you put your test right
+next to the code being tested. For example:
+
+  def multiply(a, b)
+    a * b
+  end
+
+  Test do
+    assert_equal 6, multiply(2, 3)
+    assert_equal 10, multiply(5, 10)
+    assert_not_equal 42, multiply(6, 9)
+  end
+
+Lets go over a few of the key features of in-line testing.
+
+== Optional Naming
+
+The name of a test is often used just to know what code it is testing.
+For example under traditional Test::Unit I might call the test
+"test_multiply". But this name is entirely redundant when you start
+placing your tests next to the code being tested. It is obvious what is
+being testing. When a tests fails we are often just looking at the line
+number so naming the test doesn't really help there.
+
+This doesn't mean I am against naming test. For example you may have
+multiple test blocks that are testing a single method. You want them
+in multiple blocks because each has a specific purpose. So you may
+want to give them a name to let others know of that purpose. For
+example we might write the above as:
+
+  def multiply(a, b)
+    a * b
+  end
+
+  Test 'success' do
+    assert_equal 6, multiply(2, 3)
+    assert_equal 10, multiply(5, 10)
+  end
+
+  Test 'failure' do
+    assert_not_equal 42, multiply(6, 9)
+  end
+
+Here we have separated our success testing and our failure testing into
+separate test blocks. But even here the name is just a label. In fact
+we may later have another set of tests that have a "success" and
+"failure" block. This is allowed (multiple test blocks can have the
+same label). 
+
+== Test By Running
+
+Another advantage to having tests and code together is that you can
+test a file just by running it (assuming the code is written to be
+fairly independent). No need to have fancy rake tasks or test suites.
+Just execute the file you are currently coding and the results are
+returned to you.
+
+Of course you can still run a test suite of your entire project if you
+want but sometimes it is nice to be able to pass around a file that
+contains the documentation, the code and the test all together and you
+can just run it to verify it is working.
+
+== Rails integration
+
+We also provide Rails integration. Simply include this gem in your Rails
+project and add the following lines to your Rakefile:
+
+  require 'test_inline'
+  require 'test_inline/rails_tasks'
+
+Now you will be able to run your unit tests with a simple:
+
+  rake test:inline:units
+
+You will be able to run your functional test with:
+
+  rake test:inline:functionals
+
+Or you can run both with just:
+
+  rake test:inline
+
+Finally note that our Rails integration will make the TestCase inherit
+from the right classes in the Rails framework. So for example
+you can just call the normal "get, post, etc" methods in your controller
+tests, you can access the Rails specific assertions (such as 
+assert_redirected_to). You can just place your tests right in with the
+controllers, helpers and models and it will do the right thing.
+
+== Wrapper for Test::Unit
+
+We are currently just wrapping Test::Unit. This has the advantage of
+building on something well used and standard in the Ruby world. It means
+that any traditional Test::Unit can be converted over to test_inline
+mostly by just copying and pasting. This does cause problems in the fact
+that Test::Unit has certain concepts that we don't use (like named test
+cases and named test methods). For test cases we just generate anonymous
+classes. For test methods we generate unique name (possibly based on the
+optional label).
+
+This of course opens up the question of would it be a good idea to allow
+wrapping of other test environments like RSpec, Cucumber, etc. Those
+questions are left to others as Test::Unit is good enough for most
+Ruby projects.
