@@ -9,13 +9,12 @@ require 'rubygems'
 require 'active_support'
 
 module Kernel
-  # A bit like __FILE__ but returns the file of the code that called
-  # the current method instead of the file of the current location.
-  def calling_file
+  # Will return the calling file and line number as an array
+  def calling_code
     begin
       raise StandardError
     rescue
-      $!.backtrace[2].split(':', 2).first
+      $!.backtrace[2].split(':', 3)[0..1]
     end
   end
 end

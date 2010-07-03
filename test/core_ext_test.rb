@@ -2,12 +2,14 @@ require 'test/unit'
 require 'core_ext'
 
 class KernerlTest < Test::Unit::TestCase
-  def test_calling_file
-    assert_match /core_ext_test\.rb$/, foo
+  def test_calling_code
+    file, line = *foo
+    assert_match /core_ext_test\.rb$/, file
+    assert_equal '6', line
   end
 
   private
-  def foo; calling_file end
+  def foo; calling_code end
 end
 
 class StringTest < Test::Unit::TestCase

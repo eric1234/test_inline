@@ -2,6 +2,7 @@ require 'core_ext'
 
 module Test
   module Inline
+    PROCESSED = []
 
     # Will registar parent classes for the TestCase subclasses that
     # will be created. This is useful to provide default behavior of
@@ -58,7 +59,7 @@ module Kernel
   # Will add the test to the list of tests run run. Will run the tests
   # automatically if file with inline tests is simply run.
   def Test name=String.rand(5), &blk
-    modify_inline_test_case calling_file do |tc|
+    modify_inline_test_case *calling_code do |tc|
       name = "test_#{name.gsub /\W+/, '_'}00000" unless name =~ /\d{5}$/
       name = name.succ while tc.instance_methods.include? name.to_sym
       tc.send :define_method, name, &blk
@@ -66,12 +67,14 @@ module Kernel
   end
 
   def ForTest &blk
-    modify_inline_test_case(calling_file) {|tc| tc.class_eval &blk}
+    modify_inline_test_case(*calling_code) {|tc| tc.class_eval &blk}
   end
 
   private
 
-  def modify_inline_test_case path, &blk
+  def modify_inline_test_case path, line, &blk
+    return if Test::Inline::PROCESSED.include? "#{path}:#{line}"
+    Test::Inline::PROCESSED << "#{path}:#{line}"
     path = File.expand_path path
     Test::Inline.setup path if
       Test::Inline.paths.nil? && (File.expand_path($0) == path)
