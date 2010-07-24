@@ -19,6 +19,13 @@ module Kernel
   end
 end
 
+# For older versions of ActiveSupport backport random_element
+unless Array.instance_methods.include? 'random_element'
+  class Array
+    def random_element; rand end
+  end
+end
+
 class String
   class << self
     # Returns a random string of length characters using the given
