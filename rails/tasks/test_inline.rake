@@ -2,24 +2,34 @@ namespace :test do
   namespace :inline do
 
     desc "Run inline tests in app/models, app/helpers and lib"
-    task :units => 'db:test:prepare' do
+    task :units do
+      RAILS_ENV = 'test'
+      require 'test_inline'
       fork do
-        require Rails.root.join('test/test_helper')
         paths = %w(app/models app/helpers lib).collect {|p| Rails.root.join p}
         Test::Inline.setup *paths
-        paths.each {|p| Dir["#{p}/**/*.rb"].each {|f| require f}}
+        require Rails.root.join('test/test_helper')
+        paths.each do |p|
+          Dir["#{p}/**/*.rb"].each do |f|
+            require File.expand_path(f)
+          end
+        end
         Test::Unit::AutoRunner.run
       end
       Process.wait
     end
 
     desc "Run inline tests in app/controllers"
-    task :functionals => 'db:test:prepare' do
+    task :functionals do
+      RAILS_ENV = 'test'
+      require 'test_inline'
       fork do
-        require Rails.root.join('test/test_helper')
         path = Rails.root.join('app/controllers')
         Test::Inline.setup path
-        Dir["#{path}/**/*.rb"].each {|f| require f}
+        require Rails.root.join('test/test_helper')
+        Dir["#{path}/**/*.rb"].each do |f|
+          require File.expand_path(f)
+        end
         Test::Unit::AutoRunner.run
       end
       Process.wait
