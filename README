@@ -16,3 +16,9 @@ next to the code being tested. For example:
 We also offer nice Rails integration so you can use it in your apps.
 See http://wiki.github.com/eric1234/test_inline/ for more info about
 this project.
+
+= CREDIT
+
+This gem was developed by Eric Anderson (http://pixelwareinc.com) via
+the sponsorship of the call recording service SaveYourCall.com
+(http://saveyourcall.com).
