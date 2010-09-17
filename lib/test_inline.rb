@@ -1,4 +1,4 @@
-require 'core_ext'
+require 'test_inline/core_ext'
 
 module Test
   module Inline
@@ -85,3 +85,5 @@ module Kernel
     end
   end
 end
+
+require 'test_inline/rails_integration' if defined? Rails

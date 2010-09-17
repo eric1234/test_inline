@@ -7,6 +7,8 @@
 # functionality we will just add the dependency.
 require 'rubygems'
 require 'active_support'
+require 'active_support/core_ext/string/starts_ends_with'
+require 'active_support/core_ext/array/random_access'
 
 module Kernel
   # Will return the calling file and line number as an array
@@ -19,19 +21,12 @@ module Kernel
   end
 end
 
-# For older versions of ActiveSupport backport random_element
-unless Array.instance_methods.include? 'random_element'
-  class Array
-    def random_element; rand end
-  end
-end
-
 class String
   class << self
     # Returns a random string of length characters using the given
     # characterset (default to alphanumeric)
     def rand length, characters=String.alpha_numeric_charset
-      (1..length).inject('') {|m, i| m + characters.to_a.random_element.to_s}
+      characters.to_a.sample(length).join
     end
   
     # Returns an array of all alphanumeric characters

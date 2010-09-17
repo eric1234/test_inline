@@ -1,5 +1,5 @@
 require 'test/unit'
-require 'core_ext'
+require 'test_inline/core_ext'
 
 class KernerlTest < Test::Unit::TestCase
   def test_calling_code
