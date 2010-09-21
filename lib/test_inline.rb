@@ -86,4 +86,4 @@ module Kernel
   end
 end
 
-require 'test_inline/rails_integration' if defined? Rails
+require 'test_inline/rails_integration' if defined? Rails::Railtie

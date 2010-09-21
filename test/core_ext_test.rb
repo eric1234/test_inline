@@ -23,7 +23,7 @@ class StringTest < Test::Unit::TestCase
 
   def test_rand
     assert_equal 5, String.rand(5).length
-    assert_match /^\w+$/, String.rand(20)
-    assert_match /^\d+$/, String.rand(20, 0..9)
+    assert_match /^\w{20}$/, String.rand(20)
+    assert_match /^\d{5}$/, String.rand(5, 0..9)
   end
 end

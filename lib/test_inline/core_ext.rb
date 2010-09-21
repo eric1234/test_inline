@@ -21,6 +21,23 @@ module Kernel
   end
 end
 
+class Array
+
+  # In case running under ActiveSupport 2.3.x
+  #
+  # Our def seems to be slightly different than the one from Ruby.
+  # Ruby doesn't repeat the same letter. I actually prefer ours but
+  # for the purpose of this library either will work so if sample
+  # exists then I will defer to that implementation.
+  def sample(n=nil)
+    (0...(n || 1)).inject([]) {|m, i| m << random_element}    
+  end unless method_defined? :sample
+
+  # In case running under ActiveSupport < 2.3.8
+  alias_method :random_element, :rand unless method_defined? :random_element
+
+end
+
 class String
   class << self
     # Returns a random string of length characters using the given
