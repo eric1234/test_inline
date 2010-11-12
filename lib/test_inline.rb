@@ -73,15 +73,16 @@ module Kernel
   private
 
   def modify_inline_test_case path, line, &blk
-    return if Test::Inline::PROCESSED.include? "#{path}:#{line}"
-    Test::Inline::PROCESSED << "#{path}:#{line}"
     path = File.expand_path path
     Test::Inline.setup path if
       Test::Inline.paths.nil? && (File.expand_path($0) == path)
-    if Test::Inline.paths &&
-      Test::Inline.paths.any? {|p| path.starts_with? File.expand_path(p)}
-      tc = Test::Inline.test_case_for path
-      blk.call tc
+    if Test::Inline.paths
+      return if Test::Inline::PROCESSED.include? "#{path}:#{line}"
+      Test::Inline::PROCESSED << "#{path}:#{line}"
+      if Test::Inline.paths.any? {|p| path.starts_with? File.expand_path(p)}
+        tc = Test::Inline.test_case_for path
+        blk.call tc
+      end
     end
   end
 end
