@@ -6,13 +6,7 @@ namespace :test do
     task :units do
       fork do
         test_environment
-        paths = %w(app/models app/helpers lib).collect {|p| Rails.root.join p}
-        Test::Inline.setup *paths
-        paths.each do |p|
-          Dir["#{p}/**/*.rb"].each do |f|
-            require File.expand_path(f)
-          end
-        end
+        setup_and_run Test::Inline::Railtie.unit_paths
       end
       Process.wait
     end
@@ -21,11 +15,7 @@ namespace :test do
     task :functionals do
       fork do
         test_environment
-        path = Rails.root.join('app/controllers')
-        Test::Inline.setup path
-        Dir["#{path}/**/*.rb"].each do |f|
-          require File.expand_path(f)
-        end
+        setup_and_run Test::Inline::Railtie.functional_paths
       end
       Process.wait
     end
@@ -34,6 +24,16 @@ namespace :test do
   task :inline => ['test:inline:units', 'test:inline:functionals']
 
   private
+
+  def setup_and_run(paths)
+    paths.collect! {|p| Rails.root.join p}
+    Test::Inline.setup *paths
+    paths.each do |p|
+      Dir["#{p}/**/*.rb"].each do |f|
+        require File.expand_path(f)
+      end
+    end
+  end
 
   # Rails has already loaded in order to find these Rake tasks in the
   # gem. Likely in development mode. We want to avoid people having
