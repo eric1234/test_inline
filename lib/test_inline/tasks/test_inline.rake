@@ -3,21 +3,21 @@ namespace :test do
   namespace :inline do
 
     desc "Run inline tests in app/models, app/helpers and lib"
-    task :units do
-      fork do
-        test_environment
+    task :units => :environment do
+      if Rails.env.test?
         setup_and_run Test::Inline::Railtie.unit_paths
+      else
+        system "rake test:inline:units RAILS_ENV=test"
       end
-      Process.wait
     end
 
     desc "Run inline tests in app/controllers"
-    task :functionals do
-      fork do
-        test_environment
+    task :functionals => :environment do
+      if Rails.env.test?
         setup_and_run Test::Inline::Railtie.functional_paths
+      else
+        system "rake test:inline:functionals RAILS_ENV=test"
       end
-      Process.wait
     end
 
   end
@@ -26,6 +26,7 @@ namespace :test do
   private
 
   def setup_and_run(paths)
+    require Rails.root.join('test/test_helper')
     paths.collect! {|p| Rails.root.join p}
     Test::Inline.setup *paths
     paths.each do |p|
@@ -33,17 +34,5 @@ namespace :test do
         require File.expand_path(f)
       end
     end
-  end
-
-  # Rails has already loaded in order to find these Rake tasks in the
-  # gem. Likely in development mode. We want to avoid people having
-  # to set the environment manually. So we do some hacks to try to
-  # switch to test mode. Currently we are still logging to the
-  # development log. Also likely the development initializer was loaded.
-  # FIXME: There must be a better way to do this!
-  def test_environment
-    Rails.env = 'test'
-    ActionMailer::Base.delivery_method = :test
-    require Rails.root.join('test/test_helper')
   end
 end
