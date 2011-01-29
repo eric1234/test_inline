@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'test_inline'
-  s.version = '0.0.11'
+  s.version = '0.1.0'
   s.homepage = 'http://wiki.github.com/eric1234/test_inline/'
   s.author = 'Eric Anderson'
   s.email = 'eric@pixelwareinc.com'
