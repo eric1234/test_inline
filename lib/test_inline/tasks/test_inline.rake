@@ -47,5 +47,9 @@ namespace :test do
         require File.expand_path(p)
       end
     end
+
+    # Run manually so we can pass in options
+    Test::Unit::AutoRunner.run false, nil,
+      Shellwords.split(ENV['TESTOPTS'] || '')
   end
 end
