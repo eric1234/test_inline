@@ -35,16 +35,16 @@ namespace :test do
   private
 
   def setup_and_run(*paths)
-    require Rails.root.join('test/test_helper')
     paths.collect! {|p| Rails.root.join p}
     Test::Inline.setup *paths
+    require Rails.root.join('test/test_helper')
     paths.each do |p|
       if p.directory?
         Dir["#{p}/**/*.rb"].each do |f|
-          require File.expand_path(f)
+          load f
         end
       else
-        require File.expand_path(p)
+        load p
       end
     end
 
