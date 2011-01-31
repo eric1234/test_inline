@@ -24,10 +24,10 @@ class TestInlineTest < Test::Unit::TestCase
     Test('xyz') {priv}
     Test('abc') {cat}
     ForTest {def cat; 'dog' end}
-    assert Test::Inline.test_case_for(__FILE__).instance_methods.include?("test_xyz00000")
-    assert_equal 'baz', Test::Inline.test_case_for(__FILE__).new(:test_xyz00000).test_xyz00000
-    assert Test::Inline.test_case_for(__FILE__).instance_methods.include?("test_abc00000")
-    assert_equal 'dog', Test::Inline.test_case_for(__FILE__).new(:test_abc00000).test_abc00000
+    assert Test::Inline.test_case_for(__FILE__).instance_methods.include?("test_xyz_test_inline_test_rb_00000")
+    assert_equal 'baz', Test::Inline.test_case_for(__FILE__).new(:test_xyz_test_inline_test_rb_00000).test_xyz_test_inline_test_rb_00000
+    assert Test::Inline.test_case_for(__FILE__).instance_methods.include?("test_abc_test_inline_test_rb_00000")
+    assert_equal 'dog', Test::Inline.test_case_for(__FILE__).new(:test_abc_test_inline_test_rb_00000).test_abc_test_inline_test_rb_00000
     assert_equal File.expand_path(__FILE__),
       Test::Inline.test_case_for(__FILE__).new(:another).another
   end
@@ -46,8 +46,8 @@ class TestInlineTest < Test::Unit::TestCase
     $0 = __FILE__
     Test('def') {'bar'}
     $0 = old_script
-    assert Test::Inline.test_case_for(__FILE__).instance_methods.include?("test_def00000")
-    assert_equal 'bar', Test::Inline.test_case_for(__FILE__).new(:test_def00000).test_def00000
+    assert Test::Inline.test_case_for(__FILE__).instance_methods.include?("test_def_test_inline_test_rb_00000")
+    assert_equal 'bar', Test::Inline.test_case_for(__FILE__).new(:test_def_test_inline_test_rb_00000).test_def_test_inline_test_rb_00000
   end
 
   # If we don't provide a name make sure it generates one
