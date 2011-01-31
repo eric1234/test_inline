@@ -62,7 +62,7 @@ module Kernel
     path, line = *calling_code
     modify_inline_test_case path, line do |tc|
       file = File.basename(path).gsub /\W+/, '_'
-      name = "test_#{name.gsub /\W+/, '_'}_#{file}_00000" unless name =~ /\d{5}$/
+      name = "test_#{name.gsub /\W+/, '_'}_#{file}_#{line}_00000" unless name =~ /\d{5}$/
       name = name.succ while tc.instance_methods.include? name.to_sym
       tc.send :define_method, name, &blk
     end
