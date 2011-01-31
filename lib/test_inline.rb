@@ -59,8 +59,10 @@ module Kernel
   # Will add the test to the list of tests run run. Will run the tests
   # automatically if file with inline tests is simply run.
   def Test name=String.rand(5), &blk
-    modify_inline_test_case *calling_code do |tc|
-      name = "test_#{name.gsub /\W+/, '_'}00000" unless name =~ /\d{5}$/
+    path, line = *calling_code
+    modify_inline_test_case path, line do |tc|
+      file = File.basename(path).gsub /\W+/, '_'
+      name = "test_#{name.gsub /\W+/, '_'}_#{file}_00000" unless name =~ /\d{5}$/
       name = name.succ while tc.instance_methods.include? name.to_sym
       tc.send :define_method, name, &blk
     end
