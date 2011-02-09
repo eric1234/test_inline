@@ -48,6 +48,7 @@ namespace :test do
       end
     end
 
+    require 'shellwords'
     # Run manually so we can pass in options
     Test::Unit::AutoRunner.run false, nil,
       Shellwords.split(ENV['TESTOPTS'] || '')
