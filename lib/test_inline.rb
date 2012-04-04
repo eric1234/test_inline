@@ -27,7 +27,7 @@ module Test
       # First setup should init Test::Unit and default parent class
       if @abstract_test_cases.nil?
         require 'test/unit'
-        register_abstract_test_case /./, Test::Unit::TestCase
+        register_abstract_test_case /./, 'Test::Unit::TestCase'
       end
     end
 
@@ -37,7 +37,9 @@ module Test
       path = File.expand_path path
       return @test_cases[path] if @test_cases.has_key? path
       config = @abstract_test_cases.find {|c| path =~ c[:path_regexp]}
-      klass = Class.new config[:klass]
+      klass = config[:klass]
+      klass = klass.constantize if klass.is_a? String
+      klass = Class.new klass
       config[:callback].call klass, path
       @test_cases[path] = klass
     end

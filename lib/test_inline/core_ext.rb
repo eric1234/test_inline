@@ -9,6 +9,7 @@ require 'rubygems'
 require 'active_support'
 require 'active_support/core_ext/string/starts_ends_with'
 require 'active_support/core_ext/array/random_access'
+require 'active_support/core_ext/string/inflections'
 
 module Kernel
   # Will return the calling file and line number as an array
@@ -30,7 +31,7 @@ class Array
   # for the purpose of this library either will work so if sample
   # exists then I will defer to that implementation.
   def sample(n=nil)
-    (0...(n || 1)).inject([]) {|m, i| m << random_element}    
+    (0...(n || 1)).inject([]) {|m, i| m << random_element}
   end unless method_defined? :sample
 
   # In case running under ActiveSupport < 2.3.8
@@ -45,7 +46,7 @@ class String
     def rand length, characters=String.alpha_numeric_charset
       characters.to_a.sample(length).join
     end
-  
+
     # Returns an array of all alphanumeric characters
     def alpha_numeric_charset
       ('a'..'z').to_a + ('A'..'Z').to_a + (0..9).to_a
