@@ -1,0 +1,32 @@
+= WARNING
+
+ONLY use if you like to experiment. Who knows if this is a good idea :)
+
+= PURPOSE
+
+The basic goal of this library is to allow you put your test right next to the
+code being tested. For example:
+
+    def multiply(a, b)
+      a * b
+    end
+
+    Test do
+      assert_equal 6, multiply(2, 3)
+      assert_equal 10, multiply(5, 10)
+      assert_not_equal 42, multiply(6, 9)
+    end
+
+We also offer nice Rails integration so you can use it in your apps.
+Only Rails 3 is supported. If you need Rails 2.x support see version
+0.7 of the gem or less.
+
+See http://wiki.github.com/eric1234/test_inline/ for more info about
+this project.
+
+= CREDIT
+
+* Developed by Eric Anderson (http://pixelwareinc.com)
+* Enhanced via projects developed under Red Tusk Studios (http://redtusk.com)
+* SaveYourCall.com (http://saveyourcall.com), a call recording service,
+  also contributed towards development.

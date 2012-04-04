@@ -1,0 +1,20 @@
+PATH
+  remote: .
+  specs:
+    test_inline (0.1.5)
+      activesupport
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    activesupport (3.2.3)
+      i18n (~> 0.6)
+      multi_json (~> 1.0)
+    i18n (0.6.0)
+    multi_json (1.2.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  test_inline!
