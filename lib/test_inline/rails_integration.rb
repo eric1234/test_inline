@@ -8,6 +8,10 @@ class Test::Inline::Railtie < Rails::Railtie
   cattr_accessor :functional_paths
   self.functional_paths = %w(app/controllers)
 
+  initializer 'test_inline.configure' do
+    Rails.backtrace_cleaner.remove_silencers! if Rails.env.test?
+  end
+
   # Anything else uses ActiveSupport::TestCase
   initializer 'test_inline.register.activesupport_testcase' do
     Test::Inline.register_abstract_test_case /./, 'ActiveSupport::TestCase'

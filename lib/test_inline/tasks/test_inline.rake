@@ -14,7 +14,8 @@ namespace :test do
     desc "Run inline tests in app/models, app/helpers and lib"
     task :units => :environment do
       if Rails.env.test?
-        setup_and_run *Test::Inline::Railtie.unit_paths
+        fork {setup_and_run *Test::Inline::Railtie.unit_paths}
+        Process.wait
       else
         system "rake test:inline:units RAILS_ENV=test"
       end
@@ -23,7 +24,8 @@ namespace :test do
     desc "Run inline tests in app/controllers"
     task :functionals => :environment do
       if Rails.env.test?
-        setup_and_run *Test::Inline::Railtie.functional_paths
+        fork {setup_and_run *Test::Inline::Railtie.functional_paths}
+        Process.wait
       else
         system "rake test:inline:functionals RAILS_ENV=test"
       end
