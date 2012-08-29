@@ -40,6 +40,7 @@ module Test
       klass = config[:klass]
       klass = klass.constantize if klass.is_a? String
       klass = Class.new klass
+      klass.singleton_class.send(:define_method, :name) {path}
       config[:callback].call klass, path
       @test_cases[path] = klass
     end
