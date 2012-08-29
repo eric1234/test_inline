@@ -4,8 +4,8 @@ ONLY use if you like to experiment. Who knows if this is a good idea :)
 
 = PURPOSE
 
-The basic goal of this library is to allow you put your test right next to the
-code being tested. For example:
+The basic goal of this library is to allow you put your test right next
+to the code being tested. For example:
 
     def multiply(a, b)
       a * b
@@ -27,6 +27,8 @@ this project.
 = CREDIT
 
 * Developed by Eric Anderson (http://pixelwareinc.com)
-* Enhanced via projects developed under Red Tusk Studios (http://redtusk.com)
+* Enhanced via projects developed under
+  Red Tusk Studios (http://redtusk.com) and
+  Southern Web Group (http://southernwebgroup.com)
 * SaveYourCall.com (http://saveyourcall.com), a call recording service,
   also contributed towards development.

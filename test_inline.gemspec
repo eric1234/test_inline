@@ -1,10 +1,11 @@
 Gem::Specification.new do |s|
   s.name = 'test_inline'
-  s.version = '0.3.0'
+  s.version = '0.4.0'
   s.homepage = 'http://wiki.github.com/eric1234/test_inline/'
   s.author = 'Eric Anderson'
   s.email = 'eric@pixelwareinc.com'
   s.add_dependency 'activesupport'
+  s.add_development_dependency 'rake'
   s.files = Dir['lib/**/*']
   s.extra_rdoc_files << 'README.rdoc'
   s.rdoc_options << '--main' << 'README.rdoc'
