@@ -21,7 +21,7 @@ class Test::Inline::Railtie < Rails::Railtie
   initializer 'test_inline.register.activerecord_testcase' do
     Test::Inline.register_abstract_test_case \
       Regexp.new(Regexp.escape(Rails.root.join('app/models').to_s)),
-      'ActiveRecord::TestCase'
+      'ActiveRecord::TestCase' if defined? ActiveRecord
   end
 
   # Anything under app/controllers should use ActionController::TestCase

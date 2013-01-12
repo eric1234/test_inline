@@ -53,6 +53,7 @@ namespace :test do
     require 'shellwords'
     # Run manually so we can pass in options
     Test::Unit::AutoRunner.run false, nil,
-      Shellwords.split(ENV['TESTOPTS'] || '')
+      Shellwords.split(ENV['TESTOPTS'] || '') if
+      defined? Test::Unit::AutoRunner
   end
 end
