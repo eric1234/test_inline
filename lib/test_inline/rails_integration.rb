@@ -2,7 +2,7 @@ class Test::Inline::Railtie < Rails::Railtie
 
   # The paths considered part of the "unit" tests.
   cattr_accessor :unit_paths
-  self.unit_paths = %w(app/models app/helpers lib)
+  self.unit_paths = %w(app/models app/mailers app/helpers lib)
 
   # The paths considered part of the "functional" tests
   cattr_accessor :functional_paths
@@ -22,6 +22,13 @@ class Test::Inline::Railtie < Rails::Railtie
     Test::Inline.register_abstract_test_case \
       Regexp.new(Regexp.escape(Rails.root.join('app/models').to_s)),
       'ActiveRecord::TestCase' if defined? ActiveRecord
+  end
+
+  # Anything under app/models should use ActiveRecord::TestCase
+  initializer 'test_inline.register.actionmailer_testcase' do
+    Test::Inline.register_abstract_test_case \
+      Regexp.new(Regexp.escape(Rails.root.join('app/mailers').to_s)),
+      'ActionMailer::TestCase'
   end
 
   # Anything under app/controllers should use ActionController::TestCase
