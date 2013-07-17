@@ -17,14 +17,7 @@ class Test::Inline::Railtie < Rails::Railtie
     Test::Inline.register_abstract_test_case /./, 'ActiveSupport::TestCase'
   end
 
-  # Anything under app/models should use ActiveRecord::TestCase
-  initializer 'test_inline.register.activerecord_testcase' do
-    Test::Inline.register_abstract_test_case \
-      Regexp.new(Regexp.escape(Rails.root.join('app/models').to_s)),
-      'ActiveRecord::TestCase' if defined? ActiveRecord
-  end
-
-  # Anything under app/models should use ActiveRecord::TestCase
+  # Anything under app/mailers should use ActionMailer::TestCase
   initializer 'test_inline.register.actionmailer_testcase' do
     Test::Inline.register_abstract_test_case \
       Regexp.new(Regexp.escape(Rails.root.join('app/mailers').to_s)),
