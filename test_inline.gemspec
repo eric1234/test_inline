@@ -1,12 +1,13 @@
 Gem::Specification.new do |s|
   s.name = 'test_inline'
-  s.version = '0.4.3'
+  s.version = '0.4.4'
   s.homepage = 'http://wiki.github.com/eric1234/test_inline/'
   s.author = 'Eric Anderson'
   s.email = 'eric@pixelwareinc.com'
   s.add_dependency 'activesupport'
   s.add_development_dependency 'rake'
   s.files = Dir['lib/**/*']
+  s.license = 'Public Domain'
   s.extra_rdoc_files << 'README.rdoc'
   s.rdoc_options << '--main' << 'README.rdoc'
   s.summary = 'Place your automated testing right next to the code being tested'
